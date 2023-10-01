@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: spring-security
+  jpa:
+    # Provide database platform that is being used
+    hibernate:
+      # New database is created when application starts and destroyed when application is stopped
+      ddl-auto: update
+    # Show sql when spring data jpa performs query
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # Format queries
+        format_sql: true
+  datasource:
+    # URL connection to database (spring-security is database name)
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/webkey
+    username: agilent
+    password: 3000Hanover+
+    platform: postgres
+token:
+  signing:
+    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
