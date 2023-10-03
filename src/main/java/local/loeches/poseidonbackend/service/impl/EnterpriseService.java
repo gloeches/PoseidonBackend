@@ -5,6 +5,7 @@ import local.loeches.poseidonbackend.repository.EnterpriseRepository;
 import local.loeches.poseidonbackend.repository.KeypassRepository;
 import local.loeches.poseidonbackend.dao.request.Keypass;
 import local.loeches.poseidonbackend.dao.request.Enterprise;
+import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,14 @@ public class EnterpriseService {
      }).orElseThrow(() -> new ResourceNotFoundException("Not found here"));
      return new ResponseEntity<>(keypass, HttpStatus.CREATED);
 
+ }
+ public ResponseEntity<Enterprise>getEnterpriseById(long id){
+        Optional<Enterprise> enterpriseOptional=enterpriseRepository.findById(id);
+        if (enterpriseOptional.isPresent()) {
+            return new ResponseEntity<Enterprise>(enterpriseOptional.get(), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
  }
 }

@@ -59,10 +59,8 @@ public class AuthorizationController {
     public ResponseEntity<Keypass>  createKeypass(@PathVariable(value="enterpriseId") Long enterpriseId, @RequestBody Keypass keypassRequest){
         return enterpriseService.createKeypass(enterpriseId,keypassRequest);
     }
-    @GetMapping("/resource2")
-    public SigninRequest user2 (){
-        SigninRequest myUser= new SigninRequest("a@gmail.com","1234");
-        myUser.setEmail("b.gmail.com");
-        return myUser;
+    @GetMapping("/enterprise/{id}")
+    public ResponseEntity<Enterprise> getEnterpriseById (@PathVariable(value="id") Long enterpriseId){
+       return enterpriseService.getEnterpriseById(enterpriseId);
     }
 }

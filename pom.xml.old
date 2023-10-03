@@ -8,7 +8,7 @@
         <version>3.1.0-RC1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.truongbn</groupId>
+    <groupId>local.loeches</groupId>
     <artifactId>security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>security</name>
