@@ -61,4 +61,13 @@ public class EnterpriseService {
 
         }
  }
+    public ResponseEntity<Keypass>getKeypassById(long id){
+        Optional<Keypass> keypassOptional=keypassRepository.findById(id);
+        if (keypassOptional.isPresent()) {
+            return new ResponseEntity<Keypass>(keypassOptional.get(), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
 }

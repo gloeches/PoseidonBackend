@@ -63,4 +63,9 @@ public class AuthorizationController {
     public ResponseEntity<Enterprise> getEnterpriseById (@PathVariable(value="id") Long enterpriseId){
        return enterpriseService.getEnterpriseById(enterpriseId);
     }
+
+    @GetMapping("/keypass/{id}")
+    public ResponseEntity<Keypass> getKeypassById (@PathVariable(value="id") Long keypassId){
+        return enterpriseService.getKeypassById(keypassId);
+    }
 }
