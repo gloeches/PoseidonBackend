@@ -70,4 +70,26 @@ public class EnterpriseService {
 
         }
     }
+
+    public ResponseEntity<Keypass>delKeypassById(long id){
+        try {
+            keypassRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception handlerException) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    public ResponseEntity<Enterprise>delEnterpriseById(long id){
+        try {
+            enterpriseRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception handlerException) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 }

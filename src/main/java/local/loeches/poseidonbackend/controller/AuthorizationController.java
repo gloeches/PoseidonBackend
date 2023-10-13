@@ -68,4 +68,14 @@ public class AuthorizationController {
     public ResponseEntity<Keypass> getKeypassById (@PathVariable(value="id") Long keypassId){
         return enterpriseService.getKeypassById(keypassId);
     }
+
+    @DeleteMapping("/keypass/{id}")
+    public ResponseEntity<Keypass> delKeypassById (@PathVariable(value="id") Long keypassId){
+        return enterpriseService.delKeypassById(keypassId);
+    }
+
+    @DeleteMapping("/enterprise/{id}")
+    public ResponseEntity<Enterprise> delEnterpriseById (@PathVariable(value="id") Long emterpriseId){
+        return enterpriseService.delEnterpriseById(emterpriseId);
+    }
 }
