@@ -10,7 +10,7 @@
     </parent>
     <groupId>local.loeches</groupId>
     <artifactId>poseidonbackend</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
     <name>poseidonbackend</name>
 
