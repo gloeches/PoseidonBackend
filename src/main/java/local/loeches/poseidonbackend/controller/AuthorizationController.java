@@ -51,7 +51,7 @@ public class AuthorizationController {
     }
     @PostMapping("/enterprise")
     public ResponseEntity<Enterprise> createEnterprise(@RequestBody Enterprise enterprise){
-        Enterprise _enterprise= enterpriseRepository.save (new Enterprise(enterprise.getName(),enterprise.getProjectLeader()));
+        Enterprise _enterprise= enterpriseRepository.save (new Enterprise(enterprise.getName(),enterprise.getProjectLeader(),enterprise.getOther_information()));
         return new ResponseEntity<>(_enterprise, HttpStatus.CREATED);
     }
 
