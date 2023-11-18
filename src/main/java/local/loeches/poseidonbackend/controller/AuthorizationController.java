@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin("*")
 @RestController
@@ -51,7 +53,7 @@ public class AuthorizationController {
     }
     @PostMapping("/enterprise")
     public ResponseEntity<Enterprise> createEnterprise(@RequestBody Enterprise enterprise){
-        Enterprise _enterprise= enterpriseRepository.save (new Enterprise(enterprise.getName(),enterprise.getProjectLeader(),enterprise.getOther_information()));
+        Enterprise _enterprise= enterpriseRepository.save (new Enterprise(enterprise.getName(),enterprise.getProjectLeader(),enterprise.getOther_information(),enterprise.getFilePath()));
         return new ResponseEntity<>(_enterprise, HttpStatus.CREATED);
     }
 
@@ -77,5 +79,11 @@ public class AuthorizationController {
     @DeleteMapping("/enterprise/{id}")
     public ResponseEntity<Enterprise> delEnterpriseById (@PathVariable(value="id") Long emterpriseId){
         return enterpriseService.delEnterpriseById(emterpriseId);
+    }
+
+    @PostMapping("/enterprise/{id}/filesystem")
+    public ResponseEntity<?> uploadImageToFileSystem(@PathVariable(value="id") long enterpriseId,@RequestParam("image")MultipartFile file) throws IOException {
+        ResponseEntity<Enterprise> uploadImage = enterpriseService.uploadImageToFile(enterpriseId,file);
+        return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }
 }

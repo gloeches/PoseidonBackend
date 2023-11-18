@@ -7,12 +7,16 @@ import local.loeches.poseidonbackend.dao.request.Keypass;
 import local.loeches.poseidonbackend.dao.request.Enterprise;
 import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +28,11 @@ public class EnterpriseService {
     private EnterpriseRepository enterpriseRepository;
     @Autowired
     private KeypassRepository keypassRepository;
+    private final String FOLDER_PATH="d:/poseidon/files/";
     public ResponseEntity<List<Enterprise>> getAllEnterprises(String name){
         List<Enterprise> enterpriseList=new ArrayList<Enterprise>();
         if(name==null)
-            enterpriseRepository.findAll().forEach(enterpriseList::add);
+            enterpriseRepository.findAll(Sort.by("name")).forEach(enterpriseList::add);
 
         else
             enterpriseRepository.findByNameContaining(name).forEach(enterpriseList::add);
@@ -52,6 +57,25 @@ public class EnterpriseService {
      return new ResponseEntity<>(keypass, HttpStatus.CREATED);
 
  }
+    public ResponseEntity<Enterprise> uploadImageToFile(long id,MultipartFile file) throws IOException {
+        String folderName=FOLDER_PATH+id+"/";
+        String fileName=folderName+file.getOriginalFilename();
+        Enterprise enterprise =enterpriseRepository.findById(id).map(_enterprise ->{
+            _enterprise.setFilePath(fileName);
+            try {
+                File dir = new File(folderName);
+                dir.mkdir();
+                file.transferTo(new File(fileName));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+                    return enterpriseRepository.save(_enterprise);
+
+                }
+                ).orElseThrow(() -> new ResourceNotFoundException("Enterprise not found with id: "+ id));
+        return new ResponseEntity<Enterprise>(HttpStatus.OK);
+    }
  public ResponseEntity<Enterprise>getEnterpriseById(long id){
         Optional<Enterprise> enterpriseOptional=enterpriseRepository.findById(id);
         if (enterpriseOptional.isPresent()) {
@@ -92,4 +116,6 @@ public class EnterpriseService {
         }
 
     }
+
+
 }

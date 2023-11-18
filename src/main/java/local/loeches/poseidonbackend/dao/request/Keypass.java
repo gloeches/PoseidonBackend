@@ -2,6 +2,7 @@ package local.loeches.poseidonbackend.dao.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import local.loeches.poseidonbackend.entities.usertype;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +13,9 @@ public class Keypass {
     private Long id;
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "usertype",length = 20)
+    private local.loeches.poseidonbackend.entities.usertype usertype;
     private String notes;
 
 
@@ -43,6 +47,14 @@ public class Keypass {
         return password;
     }
 
+    public local.loeches.poseidonbackend.entities.usertype getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(local.loeches.poseidonbackend.entities.usertype usertype) {
+        this.usertype = usertype;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -62,4 +74,5 @@ public class Keypass {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
 }

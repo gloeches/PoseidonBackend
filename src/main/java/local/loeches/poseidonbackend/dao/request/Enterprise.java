@@ -12,6 +12,7 @@ public class Enterprise {
     private String name;
     private String projectLeader;
     private String other_information;
+    private String filePath;
 
     public String getOther_information() {
         return other_information;
@@ -24,12 +25,21 @@ public class Enterprise {
     public Enterprise() {
     }
 
-    public Enterprise(String name, String projectLeader, String other_information)
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Enterprise(String name, String projectLeader, String other_information, String filePath)
     {
 
         this.name = name;
         this.projectLeader = projectLeader;
         this.other_information=other_information;
+        this.filePath=filePath;
 
     }
 

@@ -12,6 +12,7 @@ public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
     List<Enterprise>findByNameContaining(String name);
 
 
+
     //   @Override
 //    Optional<Enterprise> findById(Long aLong);
 
