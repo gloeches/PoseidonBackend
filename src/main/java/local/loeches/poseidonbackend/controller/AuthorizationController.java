@@ -86,4 +86,11 @@ public class AuthorizationController {
         ResponseEntity<Enterprise> uploadImage = enterpriseService.uploadImageToFile(enterpriseId,file);
         return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }
+    @GetMapping("/enterprise/{id}/filesystem")
+    public ResponseEntity<?>downloadImageFromFileSystem(@PathVariable(value="id") long enterpriseId) throws  IOException{
+       byte[] downloadFiledata =enterpriseService.downloadImageFromFileSystem(enterpriseId);
+       return ResponseEntity.status(HttpStatus.OK)
+               .body(downloadFiledata);
+
+    }
 }

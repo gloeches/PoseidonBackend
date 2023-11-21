@@ -49,4 +49,5 @@ public class AuthenticationController {
     public ResponseEntity <List<Agilent>> getAllMails(@RequestParam(required = false) String name){
         return agilentService.getMails(name);
     }
+
 }

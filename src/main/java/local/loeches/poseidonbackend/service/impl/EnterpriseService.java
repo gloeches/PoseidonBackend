@@ -15,8 +15,10 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,14 +60,15 @@ public class EnterpriseService {
 
  }
     public ResponseEntity<Enterprise> uploadImageToFile(long id,MultipartFile file) throws IOException {
-        String folderName=FOLDER_PATH+id+"/";
-        String fileName=folderName+file.getOriginalFilename();
+        String finalPath=FOLDER_PATH+id+"/";
+        String relativePath=id+"/";
+        String fileNameFull=finalPath+file.getOriginalFilename();
         Enterprise enterprise =enterpriseRepository.findById(id).map(_enterprise ->{
-            _enterprise.setFilePath(fileName);
+            _enterprise.setFilePath(relativePath+file.getOriginalFilename());
             try {
-                File dir = new File(folderName);
+                File dir = new File(finalPath);
                 dir.mkdir();
-                file.transferTo(new File(fileName));
+                file.transferTo(new File(fileNameFull));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -75,6 +78,15 @@ public class EnterpriseService {
                 }
                 ).orElseThrow(() -> new ResourceNotFoundException("Enterprise not found with id: "+ id));
         return new ResponseEntity<Enterprise>(HttpStatus.OK);
+    }
+    public byte[] downloadImageFromFileSystem(long id) throws IOException {
+        Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
+        if (enterprise.isPresent()) {
+            String filePath = FOLDER_PATH+enterprise.get().getFilePath();
+            byte[] images = Files.readAllBytes(new File(filePath).toPath());
+            return images;
+        }
+        return null;
     }
  public ResponseEntity<Enterprise>getEnterpriseById(long id){
         Optional<Enterprise> enterpriseOptional=enterpriseRepository.findById(id);
