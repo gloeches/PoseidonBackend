@@ -81,7 +81,11 @@ public class AuthorizationController {
     public ResponseEntity<Enterprise> delEnterpriseById (@PathVariable(value="id") Long emterpriseId){
         return enterpriseService.delEnterpriseById(emterpriseId);
     }
-
+    @PostMapping("/enterprise/{id}/filesystem2")
+    public ResponseEntity<?> uploadImageToFileSystem2(@PathVariable(value="id") long enterpriseId) throws IOException {
+        String salida="ok";
+        return ResponseEntity.status(HttpStatus.OK).body(salida);
+    }
     @PostMapping("/enterprise/{id}/filesystem")
     public ResponseEntity<?> uploadImageToFileSystem(@PathVariable(value="id") long enterpriseId,@RequestParam("image")MultipartFile file) throws IOException {
         ResponseEntity<Enterprise> uploadImage = enterpriseService.uploadImageToFile(enterpriseId,file);
