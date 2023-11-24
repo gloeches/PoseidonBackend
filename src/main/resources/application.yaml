@@ -1,6 +1,10 @@
 spring:
   application:
     name: spring-security
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
   jpa:
     # Provide database platform that is being used
     hibernate:
