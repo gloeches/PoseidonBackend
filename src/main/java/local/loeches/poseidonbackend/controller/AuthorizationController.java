@@ -58,6 +58,7 @@ public class AuthorizationController {
         return new ResponseEntity<>(_enterprise, HttpStatus.CREATED);
     }
 
+
     @PostMapping("/enterprises/{enterpriseId}/keypass")
     public ResponseEntity<Keypass>  createKeypass(@PathVariable(value="enterpriseId") Long enterpriseId, @RequestBody Keypass keypassRequest){
         return enterpriseService.createKeypass(enterpriseId,keypassRequest);
@@ -90,6 +91,13 @@ public class AuthorizationController {
     public ResponseEntity<?> uploadImageToFileSystem(@PathVariable(value="id") long enterpriseId,@RequestParam("image")MultipartFile file) throws IOException {
         ResponseEntity<Enterprise> uploadImage = enterpriseService.uploadImageToFile(enterpriseId,file);
         return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
+    }
+
+    @PostMapping("/enterprise_upload")
+    public ResponseEntity<Enterprise> createEnterpriseUpload(@RequestBody Enterprise enterprise,@RequestParam("image")MultipartFile file) throws IOException{
+        Enterprise _enterprise= enterpriseRepository.save (enterprise);
+        ResponseEntity<Enterprise> uploadImage = enterpriseService.uploadImageToFile(_enterprise.getId(),file);
+        return new ResponseEntity<>(_enterprise, HttpStatus.CREATED);
     }
     @GetMapping("/enterprise/{id}/filesystem")
     public ResponseEntity<?>downloadImageFromFileSystem(@PathVariable(value="id") long enterpriseId) throws  IOException{

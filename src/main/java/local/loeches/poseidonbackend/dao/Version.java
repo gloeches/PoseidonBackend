@@ -6,8 +6,8 @@ public class Version {
 
 
     public Version(){
-        this.versionDate="14-Nov-2023";
-        this.versionContent="01.04";
+        this.versionDate="29-Nov-2023";
+        this.versionContent="02.00";
     }
 
     public String getVersionDate() {

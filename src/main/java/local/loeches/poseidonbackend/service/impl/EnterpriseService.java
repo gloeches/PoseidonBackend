@@ -37,7 +37,7 @@ public class EnterpriseService {
             enterpriseRepository.findAll(Sort.by("name")).forEach(enterpriseList::add);
 
         else
-            enterpriseRepository.findByNameContaining(name).forEach(enterpriseList::add);
+            enterpriseRepository.findByNameContainingIgnoreCase(name).forEach(enterpriseList::add);
         if(enterpriseList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
