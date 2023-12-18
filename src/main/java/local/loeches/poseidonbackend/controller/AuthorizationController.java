@@ -47,6 +47,10 @@ public class AuthorizationController {
     public ResponseEntity<List<Enterprise>> getAllEnterprises(@RequestParam(required=false)  String name){
         return enterpriseService.getAllEnterprises(name);
     }
+    @GetMapping("/admin/enterprises")
+    public ResponseEntity<List<Enterprise>> getAllEnterprisesAdmin(@RequestParam(required=false)  String name){
+        return enterpriseService.getAllEnterprises(name);
+    }
     @GetMapping("/enterprises/{enterpriseId}/keypass")
     public ResponseEntity<List<Keypass>> getAllkeypassByEnterpriseID(@PathVariable(value="enterpriseId") long enterpriseId){
         return enterpriseService.getAllKeypassByEnterpriseId(enterpriseId);
@@ -78,6 +82,10 @@ public class AuthorizationController {
         return enterpriseService.delKeypassById(keypassId);
     }
 
+    @DeleteMapping("/admin/enterprise/{id}")
+    public ResponseEntity<Enterprise> delEnterpriseById2 (@PathVariable(value="id") Long emterpriseId){
+        return enterpriseService.delEnterpriseById(emterpriseId);
+    }
     @DeleteMapping("/enterprise/{id}")
     public ResponseEntity<Enterprise> delEnterpriseById (@PathVariable(value="id") Long emterpriseId){
         return enterpriseService.delEnterpriseById(emterpriseId);

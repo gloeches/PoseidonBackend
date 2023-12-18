@@ -64,7 +64,7 @@ public class EnterpriseService {
         String relativePath=id+"/";
         String fileNameFull=finalPath+file.getOriginalFilename();
         Enterprise enterprise =enterpriseRepository.findById(id).map(_enterprise ->{
-            _enterprise.setFilePath(relativePath+file.getOriginalFilename());
+            _enterprise.setFilePath(file.getOriginalFilename());
             try {
                 File dir = new File(finalPath);
                 dir.mkdir();
@@ -82,7 +82,8 @@ public class EnterpriseService {
     public byte[] downloadImageFromFileSystem(long id) throws IOException {
         Optional<Enterprise> enterprise = enterpriseRepository.findById(id);
         if (enterprise.isPresent()) {
-            String filePath = FOLDER_PATH+enterprise.get().getFilePath();
+            String finalPath=FOLDER_PATH+id+"/";
+            String filePath = finalPath+enterprise.get().getFilePath();
             byte[] images = Files.readAllBytes(new File(filePath).toPath());
             return images;
         }
